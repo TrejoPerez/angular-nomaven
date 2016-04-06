@@ -20,11 +20,21 @@ and open the template in the editor.
               
               
              $scope.actualizar = function(){
-                  $http.put('http://localhost:9999/mensaje/1/nuevo/mensaje 1 actualizado').success(function(json){
+                  $http.put('http://localhost:9999/mensaje/1/nuevo/mensaje 1 actualizado')
+                          .success(function(json){
                      $scope.actualizado=json; 
                   });
                   
               } 
+              
+              
+            $scope.buscarTodos=function(){
+            $http.get('http://localhost:9999/mensaje')
+                    .success(function(json){
+                $scope.mensajes=json;
+                   }); 
+            }  
+              
             });
         </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,6 +49,11 @@ and open the template in the editor.
             
             <button ng-click="actualizar()">Actualizar</button>
             {{actualizado}}
+            
+<button ng-click="buscarTodos()">Cargar todos los mensajes</button>
+            <div ng-repeat="mensaje in mensajes">
+                {{mensaje.cuerpo}}
+            </div>
         </div>
     </body>
 </html>
