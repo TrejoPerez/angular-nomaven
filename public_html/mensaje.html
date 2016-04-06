@@ -7,6 +7,7 @@ and open the template in the editor.
 <html>
    <meta charset="UTF-8">
         <script src="angular.min.js"></script>
+        <link rel="stylesheet" href="bootstrap.css">
         <script >
             angular.module('mensaje',[]).controller('ctrlMensaje', function($scope,$http){
               $scope.Mensajito='asasasa';  
@@ -51,8 +52,23 @@ and open the template in the editor.
             {{actualizado}}
             
 <button ng-click="buscarTodos()">Cargar todos los mensajes</button>
-            <div ng-repeat="mensaje in mensajes">
-                {{mensaje.cuerpo}}
+            <div >
+            <table class="table">
+    <thead>
+      <tr>
+        <th>titulo</th>
+        <th>cuerpo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="success" ng-repeat="mensaje in mensajes">
+        <td>{{mensaje.titulo}}</td>
+        <td>{{mensaje.cuerpo}}</td>
+      
+      </tr>
+     
+    </tbody>
+  </table>
             </div>
         </div>
     </body>
