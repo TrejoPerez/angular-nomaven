@@ -13,7 +13,7 @@ and open the template in the editor.
               $scope.Mensajito='asasasa';  
             
               $scope.guardar = function(){
-                  $http.post('http://localhost:9999/mensaje/yo/un mendsjito ddesde angular').success(function(json){
+                  $http.post('http://localhost:9000/mensaje/yo/un mendsjito ddesde angular').success(function(json){
                      $scope.guardado=json; 
                   });
                   
@@ -21,16 +21,20 @@ and open the template in the editor.
               
               
              $scope.actualizar = function(){
-                  $http.put('http://localhost:9999/mensaje/1/nuevo/mensaje 1 actualizado')
+                  $http.put('http://localhost:9000/mensaje/1/nuevo/mensaje 1 actualizado')
                           .success(function(json){
                      $scope.actualizado=json; 
                   });
                   
               } 
               
+            
+                  
+              
+              
               
             $scope.buscarTodos=function(){
-            $http.get('http://localhost:9999/mensaje')
+            $http.get('http://localhost:9000/mensaje')
                     .success(function(json){
                 $scope.mensajes=json;
                    }); 
@@ -52,6 +56,7 @@ and open the template in the editor.
             {{actualizado}}
             
 <button ng-click="buscarTodos()">Cargar todos los mensajes</button>
+
             <div >
             <table class="table">
     <thead>
