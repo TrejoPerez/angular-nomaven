@@ -10,37 +10,35 @@ and open the template in the editor.
         <link rel="stylesheet" href="bootstrap.css">
         <script >
             angular.module('mensaje',[]).controller('ctrlMensaje', function($scope,$http){
-              $scope.Mensajito='asasasa';  
+              $scope.Mensajito='Asi se imprime en pantalla';  
             
               $scope.guardar = function(){
-                  $http.post('http://localhost:9000/mensaje/yo/un mendsjito ddesde angular').success(function(json){
+                  $http.post('http://localhost:9000/mensaje/Vamos/Esto es correcto').success(function(json){
                      $scope.guardado=json; 
                   });
                   
-              }
-              
-              
+              }  
              $scope.actualizar = function(){
                   $http.put('http://localhost:9000/mensaje/1/nuevo/mensaje 1 actualizado')
                           .success(function(json){
                      $scope.actualizado=json; 
                   });
                   
-              } 
-              
-            
-                  
-              
-              
-              
+              }    
             $scope.buscarTodos=function(){
             $http.get('http://localhost:9000/mensaje')
                     .success(function(json){
                 $scope.mensajes=json;
                    }); 
             }  
-              
-            });
+            
+            $scope.buscarId=function(){
+                $http.get('http://localhost:9000/mensajes/8')
+                        .success(function (json){
+                    $scope.buscado=json;
+                });
+            }
+    });
         </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -54,27 +52,45 @@ and open the template in the editor.
             
             <button ng-click="actualizar()">Actualizar</button>
             {{actualizado}}
+           
             
-<button ng-click="buscarTodos()">Cargar todos los mensajes</button>
-
-            <div >
-            <table class="table">
-    <thead>
-      <tr>
-        <th>titulo</th>
-        <th>cuerpo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="success" ng-repeat="mensaje in mensajes">
-        <td>{{mensaje.titulo}}</td>
-        <td>{{mensaje.cuerpo}}</td>
-      
-      </tr>
-     
-    </tbody>
-  </table>
-            </div>
+            
+            <button ng-click="buscarId()">Buscar Id</button>
+                <div>
+                    <table class="table">
+                        <thead> 
+                            <tr>
+                                <th>titulo</th>
+                                <th>cuerpo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="success" ng-repeat="mensajep in buscado">
+                                <td>{{mensajep.titulo}}</td>
+                                <td>{{mensajep.cuerpo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>    
+            
+            
+            <button ng-click="buscarTodos()">Cargar todos los mensajes</button>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>titulo</th>
+                                <th>cuerpo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="success" ng-repeat="mensaje in mensajes">
+                                <td>{{mensaje.titulo}}</td>
+                                <td>{{mensaje.cuerpo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
         </div>
     </body>
 </html>
