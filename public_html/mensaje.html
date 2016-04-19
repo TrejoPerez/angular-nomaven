@@ -5,21 +5,23 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-   <meta charset="UTF-8">
+    <head>
+     <meta charset="UTF-8">
         <script src="angular.min.js"></script>
         <link rel="stylesheet" href="bootstrap.css">
         <script >
             angular.module('mensaje',[]).controller('ctrlMensaje', function($scope,$http){
-              $scope.Mensajito='Asi se imprime en pantalla';  
+            
+            
             
               $scope.guardar = function(){
-                  $http.post('http://localhost:9000/mensaje/Vamos/Esto es correcto').success(function(json){
+                  $http.post('http://localhost:9000/mensaje/'+$scope.titulo+'/'+$scope.cuerpo).success(function(json){
                      $scope.guardado=json; 
                   });
                   
               }  
              $scope.actualizar = function(){
-                  $http.put('http://localhost:9000/mensaje/1/nuevo/mensaje 1 actualizado')
+                  $http.put('http://localhost:9000/mensajep/'+$scope.Aid+'/'+$scope.Atitulo+'/' +$scope.Acuerpo)
                           .success(function(json){
                      $scope.actualizado=json; 
                   });
@@ -32,30 +34,60 @@ and open the template in the editor.
                    }); 
             }  
             
-            $scope.buscarId=function(){
-                $http.get('http://localhost:9000/mensajes/8')
-                        .success(function (json){
-                    $scope.buscado=json;
+           $scope.buscarId=function(){
+            $http.get('http://localhost:9000/mensajes/'+$scope.busca)
+                    .success(function(json){
+                $scope.buscado=json;
+                   }); 
+            } 
+            
+            $scope.borrar=function(){
+                $http.post('http://localhost:9000/mensajep/'+$scope.borrarDato)
+                        .success(function(html){
+                            $scope.borrado=html;
                 });
             }
-    });
+            
+        });
+            
         </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-app="mensaje">
+    <body ng-app="mensaje" >
         <div ng-controller="ctrlMensaje">
+            <!--<h1 class="bg-info" align="center"> Proyecto Muñiz y Trejo </h1>-->
             
-            {{Mensajito}}
+            <font color="red"></font>
+            <h6 class="alert-success">titulo
+             <input  type="text" ng-model="titulo">
+            cuerpo
+            <input type="text" ng-model="cuerpo" font-color="blue">
+            <button class ="btn btn-success" ng-click="guardar()">guardar</button>
+            {{guardado}}</h6>
+
+            <br><br>
+            <h6 class="alert-info">Id
+             <input type="text" ng-model="Aid">
+             titulo
+            <input type="text" ng-model="Atitulo">
+            cuerpo
+            <input type="text" ng-model="Acuerpo">
+            <button class="btn btn-primary" ng-click="actualizar()">Actualizar</button>
+            {{actualizado}}</h6>
             
-            <button ng-click="guardar()">guardar</button>
-            {{guardado}}
             
-            <button ng-click="actualizar()">Actualizar</button>
-            {{actualizado}}
-           
+            <br><br>
+            <h6 class="alert-danger">Id
+            <input type="text" ng-model="borrarDato">
+            <button class="btn btn-danger" ng-click="borrar()">Borrar</button>
+            {{borrado}}</h6>
+            <br><br>
             
             
-            <button ng-click="buscarId()">Buscar Id</button>
+            <h6 class="alert-success">Id
+            <input type="text" ng-model="busca">
+            <button class="btn btn-default" ng-click="buscarId()">Buscar Id</button></h6>
+            
                 <div>
                     <table class="table">
                         <thead> 
@@ -65,26 +97,29 @@ and open the template in the editor.
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="success" ng-repeat="mensajep in buscado">
-                                <td>{{mensajep.titulo}}</td>
-                                <td>{{mensajep.cuerpo}}</td>
+                            <tr class="success">
+                                <td>{{buscado.titulo}}</td>
+                                <td>{{buscado.cuerpo}}</td>
                             </tr>
                         </tbody>
+                        
                     </table>
                 </div>    
             
             
-            <button ng-click="buscarTodos()">Cargar todos los mensajes</button>
+            <button class ="btn btn-info" ng-click="buscarTodos()">Cargar todos los mensajes</button>
                 <div>
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>Id</th>
                                 <th>titulo</th>
                                 <th>cuerpo</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="success" ng-repeat="mensaje in mensajes">
+                                <td>{{mensaje.id}}</td>
                                 <td>{{mensaje.titulo}}</td>
                                 <td>{{mensaje.cuerpo}}</td>
                             </tr>
